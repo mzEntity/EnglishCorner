@@ -5,7 +5,6 @@ class User:
         self.port = port
         self.cornerIn = None
 
-
     def sendMessage(self, message):
         # TODO
         pass
