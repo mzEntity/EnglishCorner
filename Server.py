@@ -37,7 +37,7 @@ while True:
     data, addr = sock.recvfrom(1024)
     msg = data.decode("utf-8")
     print("received message from", addr)
-    if msg == "quit":
+    if msg == "bye":
         break
     # 发送回复消息
     reply_message = responseToMsg(msg, addr)

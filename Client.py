@@ -11,7 +11,7 @@ def translateToPacket(message):
     translator = ProtocolTranslator()
     inputParser = InputParser()
 
-    if message == "quit":
+    if message == "bye":
         return message
 
     try:
