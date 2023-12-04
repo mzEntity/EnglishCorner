@@ -243,6 +243,14 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
     },
     "body": ""
 }
+{
+    "header": {
+        "type": "enter",
+        "code": "400",
+        "msg": "You are already in a corner."
+    },
+    "body": ""
+}
 ```
 
 #### /exit

@@ -45,15 +45,13 @@ class CornersCommand(Command):
 
     def execute(self):
         corners = self.receiver.getAllCorners()
-        cornerList = []
-        for _, corner in corners.items():
-            cornerList.append(corner)
         bodyStr = ""
-        if len(cornerList) != 0:
-            firstCorner = cornerList[0]
-            bodyStr = firstCorner.name + "\t" + firstCorner.language
-            for corner in cornerList[1:]:
-                bodyStr += "\n" + corner.name + "\t" + corner.language
+        for _, corner in corners.items():
+            bodyStr += corner.name + "\t" + corner.language + "\n"
+
+        if corners:
+            bodyStr = bodyStr[:-1]
+
         return createSuccessReceiptDict(self.type, "list all corners", bodyStr)
 
     @staticmethod
@@ -76,17 +74,15 @@ class ListusersCommand(Command):
             msg = "You are not in any corner"
             return createFailReceiptDict(self.type, msg, "")
 
-        userList = []
-        for userId in users.keys():
-            userList.append(userId)
+        bodyStr = ""
+        for _, user in users.items():
+            bodyStr += user.name + "\n"
             
         msg = "list all users"
-        bodyStr = ""
-        if len(userList) != 0:
-            firstUser = userList[0]
-            bodyStr = firstUser.name
-            for user in userList[1:]:
-                bodyStr += "\n" + user.name
+        
+        if users:
+            bodyStr = bodyStr[:-1]
+                
         return createSuccessReceiptDict(self.type, msg, bodyStr)
 
     @staticmethod
@@ -102,9 +98,11 @@ class OpenCornerCommand(Command):
         self.cornerName, self.cornerLanguage = bodyStr.split("\t")
 
     def execute(self):
-        if not self.receiver.addCorner(self.cornerName, self.cornerLanguage):
+        if self.receiver.getCornerByCornerName(self.cornerName):
             msg = "cornerName already exists"
             return createFailReceiptDict(self.type, msg, "")
+
+        self.receiver.addCorner(self.cornerName, self.cornerLanguage)
         msg = "open corner success"
         return createSuccessReceiptDict(self.type, msg, "")
 
@@ -126,6 +124,8 @@ class EnterCommand(Command):
         if corner is None:
             return createFailReceiptDict(self.type, "No such corner", "")
         admin = self.receiver.getAdminByUserId(self.userId)
+        if admin.getCorner():
+            return createFailReceiptDict(self.type, "You are already in a corner.", "")
         corner.addAdmin(admin)
         admin.joinCorner(corner)
         return createSuccessReceiptDict(self.type, "enter corner successfully", "")
@@ -150,7 +150,7 @@ class ExitCommand(Command):
             return createFailReceiptDict(self.type, "You are not in that corner", "")
         corner.removeAdmin(self.userId)
         admin = self.receiver.getAdminByUserId(self.userId)
-        admin.leaveCorner(corner)
+        admin.leaveCorner()
         msg = "exit corner successfully"
         return createSuccessReceiptDict(self.type, msg, "")
 

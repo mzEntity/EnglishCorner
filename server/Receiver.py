@@ -26,10 +26,9 @@ class Receiver:
 
     def addCorner(self, cornerName, cornerLanguage):
         if cornerName in self.corners:
-            return False
+            return
         corner = Corner(cornerName, cornerLanguage)
         self.corners[cornerName] = corner
-        return True
 
     def removeUser(self, userId):
         if userId not in self.users:
@@ -65,6 +64,11 @@ class Receiver:
         if userId not in self.users:
             return None
         return self.users[userId]
+
+    def getCornerByCornerName(self, cornerName):
+        if cornerName not in self.corners:
+            return None
+        return self.corners[cornerName]
         
 
     def userJoinCorner(self, userId, cornerName):
@@ -105,6 +109,7 @@ class Receiver:
         while randomId in self.users or randomId in self.admins:
             randomId = Utils.getRandomUserId()
         return randomId
+
         
         
     def action(self, cmdStr):

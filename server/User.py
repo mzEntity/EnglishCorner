@@ -3,7 +3,7 @@ class User:
         self.id = id
         self.ip = ip
         self.port = port
-        self.cornerIn = {}
+        self.cornerIn = None
 
 
     def sendMessage(self, message):
@@ -11,9 +11,10 @@ class User:
         pass
 
     def joinCorner(self, corner):
-        self.cornerIn[corner.name] = corner
+        self.cornerIn = corner
 
-    def leaveCorner(self, cornerName):
-        if cornerName not in self.cornerIn:
-            return
-        del self.cornerIn[cornerName]
+    def leaveCorner(self):
+        self.cornerIn = None
+
+    def getCorner(self):
+        return self.cornerIn
