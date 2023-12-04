@@ -1,9 +1,9 @@
 from common.workspace.Command import *
 from common.Singleton import singleton
+from common.exception.Exceptions import *
 
 @singleton
 class CommandFactory:
-    
     def __init__(self):
         self.validCommand = {
             "login": LoginCommand,
@@ -31,9 +31,3 @@ class CommandFactory:
         return self.validCommand[requestType].createBodyStr(elements)
         
 
-class HeaderLackOfMemberException(Exception):
-    def __init__(self, msg):
-        self.message = msg
-
-    def __str__(self):
-        return self.message

@@ -74,7 +74,11 @@ class Receiver:
         return self.users
 
     def getAllUsersOfCurrentCorner(self, userId):
-        user = self.users[userId]
+        user = None
+        if userId in self.users:
+            user = self.users[userId]
+        else:
+            user = self.admins[userId]
         if user.cornerIn is None:
             return None
         else:

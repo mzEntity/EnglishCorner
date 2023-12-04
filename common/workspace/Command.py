@@ -1,6 +1,6 @@
 from server.Receiver import Receiver
 
-
+from common.exception.Exceptions import *
 
 class Command:
     def __init__(self, headerDict, bodyStr):
@@ -89,9 +89,4 @@ class OpenCornerCommand(Command):
             raise InvalidCommandException("Invalid /opencorner command")
         return elements[1] + "\t" + elements[2]
 
-class InvalidCommandException(Exception):
-    def __init__(self, msg):
-        self.message = msg
 
-    def __str__(self):
-        return self.message

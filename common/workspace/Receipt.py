@@ -1,3 +1,4 @@
+
 def createHeaderDict(type, code, msg):
     headerDict = {
         "type": type,
@@ -97,9 +98,3 @@ class OpenCornerReceipt(Receipt):
         return createSuccessReceiptDict(type, msg, "")
 
 
-class InvalidReceiptException(Exception):
-    def __init__(self, msg):
-        self.message = msg
-
-    def __str__(self):
-        return self.message

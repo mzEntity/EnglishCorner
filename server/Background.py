@@ -8,7 +8,7 @@ class Background:
 
     def executeCommand(self, command):
         result = command.execute()
-        return self.receiptManager.createReceiptDict(command.type, result)
+        return self.receiptManager.createReturnDict(command.type, result)
         
 
 

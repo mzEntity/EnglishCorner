@@ -1,6 +1,7 @@
 from common.workspace.CommandFactory import CommandFactory
 from common.Singleton import singleton
 from common.Cache import GlobalCache
+from common.exception.Exceptions import *
 
 @singleton
 class InputParser:
@@ -33,9 +34,3 @@ class InputParser:
         except Exception as e:
             raise InvalidRequestException(str(e))
 
-class InvalidRequestException(Exception):
-    def __init__(self, msg):
-        self.message = msg
-
-    def __str__(self):
-        return self.message

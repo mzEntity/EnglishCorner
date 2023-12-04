@@ -4,7 +4,6 @@ from common.Config import *
 from common.Protocol import ProtocolTranslator
 from common.workspace.CommandFactory import CommandFactory
 from server.Background import Background
-from common.workspace.ReceiptManager import ReceiptManager
 
 def setAddrToHeader(msgDict, addr):
     msgDict["header"]["ip"] = addr[0]
@@ -14,7 +13,6 @@ def responseToMsg(msg, addr):
     translator = ProtocolTranslator()
     cmdFactory = CommandFactory()
     background = Background()
-    receiptManager = ReceiptManager()
     try:
         msgDict = translator.strToDict(msg)
         setAddrToHeader(msgDict, addr)
@@ -27,9 +25,6 @@ def responseToMsg(msg, addr):
         return ""
 
     
-    
-
-
 
 # 创建UDP Socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

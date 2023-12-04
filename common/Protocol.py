@@ -6,6 +6,8 @@ import re
 
 from common.MessageDict import MessageDict
 from common.Singleton import singleton
+from common.exception.Exceptions import *
+
 
 @singleton
 class ProtocolTranslator:
@@ -138,19 +140,7 @@ class _HeaderManager:
 
 
 
-class InvalidPacketException(Exception):
-    def __init__(self, msg):
-        self.message = msg
 
-    def __str__(self):
-        return self.message
-
-class InvalidHeaderException(Exception):
-    def __init__(self, msg):
-        self.message = msg
-
-    def __str__(self):
-        return self.message
 
 
 if __name__ == "__main__":
