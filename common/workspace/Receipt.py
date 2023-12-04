@@ -84,3 +84,11 @@ class ExitReceipt(Receipt):
 
     def response(self):
         print(self.msg)
+
+class CloseCornerReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        print(self.msg)

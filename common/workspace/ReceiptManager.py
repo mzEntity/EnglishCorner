@@ -11,7 +11,8 @@ class ReceiptManager:
             "listusers": ListusersReceipt,
             "opencorner": OpenCornerReceipt,
             "enter": EnterReceipt,
-            "exit": ExitReceipt
+            "exit": ExitReceipt,
+            "closecorner": CloseCornerReceipt
         }
 
     def createReceipt(self, receiptDict):

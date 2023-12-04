@@ -9,38 +9,37 @@ class Corner:
 
     def addAdmin(self, user):
         userId = user.id
-        self.admins.setdefault(userId, user)
+        self.admins[userId] = user
 
     def addUser(self, user):
         userId = user.id
-        self.users.setdefault(userId, user)
-        self.sendSystemINFO(f"Welcome user {user.id}")
+        self.users[userId] = user
 
     def removeUser(self, userId):
         if userId not in self.users:
             return
-        user = self.users[userId]
         del self.users[userId]
-        self.sendSystemINFO(f"goodbye user {user.id}")
 
-    def sendMessage(self, fromUserId, msg):
-        for userId, user in self.users.items():
-            if userId == fromUserId:
-                continue
-            user.sendMessage(msg)
-    
-    def sendSystemINFO(self, msg):
-        for _, user in self.users.items():
-            user.sendMessage(msg)
-
-    def close(self):
-        self.sendSystemINFO(f"Corner {self.name} closed.")
-        self.users.clear()
+    def removeAdmin(self, userId):
+        if userId not in self.admins:
+            return
+        del self.admins[userId]
 
     def containAdmin(self, adminId):
         return adminId in self.admins
 
-    def removeAdmin(self, adminId):
-        if adminId not in self.admins:
-            return
-        del self.admins[adminId]
+    def containUser(self, userId):
+        return userId in self.users
+
+    def getUsers(self):
+        return self.users
+    
+    def getAdmins(self):
+        return self.admins
+
+
+    def close(self):
+        self.users.clear()
+        self.admins.clear()
+
+    

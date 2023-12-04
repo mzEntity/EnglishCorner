@@ -161,6 +161,33 @@ class ExitCommand(Command):
         return elements[1]
 
 
+class CloseCornerCommand(Command):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+        self.cornerName = bodyStr
+
+    def execute(self):
+        corner = self.receiver.getCornerByCornerName(self.cornerName)
+        if corner is None:
+            return createFailReceiptDict(self.type, "No such corner", "")
+        users = corner.getUsers()
+        admins = corner.getAdmins()
+        for _, user in users.items():
+            user.leaveCorner()
+        for _, admin in admins.items():
+            admin.leaveCorner()
+        corner.close()
+        return createSuccessReceiptDict(self.type, "close corner successfully", "")
+        
+    @staticmethod
+    def createBodyStr(elements):
+        if len(elements) != 2 or elements[0] != "closecorner":
+            raise InvalidCommandException("Invalid /closecorner command")
+        return elements[1]
+
+
+
 def createHeaderDict(type, code, msg):
     headerDict = {
         "type": type,

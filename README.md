@@ -327,7 +327,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
         "code": "200",
         "msg": "close corner successfully"
     },
-    "body": "myCorner"
+    "body": ""
 }
 {
     "header": {
@@ -335,7 +335,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
         "code": "400",
         "msg": "No such corner"
     },
-    "body": "myCorner"
+    "body": ""
 }
 ```
 
