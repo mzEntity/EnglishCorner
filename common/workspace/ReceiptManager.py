@@ -9,7 +9,8 @@ class ReceiptManager:
             "login": LoginReceipt,
             "corners": CornersReceipt, 
             "listusers": ListusersReceipt,
-            "opencorner": OpenCornerReceipt
+            "opencorner": OpenCornerReceipt,
+            "enter": EnterReceipt
         }
 
     def createReceipt(self, receiptDict):
@@ -25,8 +26,3 @@ class ReceiptManager:
             raise InvalidReceiptException("createReceipt: no such receipt")
         newReceipt = self.validReceipt[receiptType](headerDict, receiptDict["body"])
         return newReceipt
-
-    def createReturnDict(self, receiptType, result):
-        if receiptType not in self.validReceipt:
-            raise InvalidReceiptException("createReceipt: no such receipt")
-        return self.validReceipt[receiptType].getDict(result)

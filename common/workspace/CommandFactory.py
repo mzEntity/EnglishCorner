@@ -9,7 +9,8 @@ class CommandFactory:
             "login": LoginCommand,
             "corners": CornersCommand, 
             "listusers": ListusersCommand,
-            "opencorner": OpenCornerCommand
+            "opencorner": OpenCornerCommand,
+            "enter": EnterCommand
         }
 
     def createCommand(self, commandDict):

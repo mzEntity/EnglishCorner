@@ -51,6 +51,12 @@ class Receiver:
         corner.close()
         del self.corners[cornerName]
 
+    def getCornerByCornerName(self, cornerName):
+        if cornerName not in self.corners:
+            return None
+        return self.corners[cornerName]
+        
+
     def userJoinCorner(self, userId, cornerName):
         if userId not in self.users or cornerName not in self.corners:
             return
