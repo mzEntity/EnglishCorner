@@ -56,9 +56,10 @@ class ListusersReceipt(Receipt):
             return
         bodyStr = self.body
         userList = bodyStr.split("\n")
-        print("users: ")
-        for userName in userList:
-            print(userName)
+        print("%10s|%10s" % ("username", "userid"))
+        for user in userList:
+            userName, userId = user.split("\t")
+            print("%10s %10s" % (userName, userId))
 
         
 

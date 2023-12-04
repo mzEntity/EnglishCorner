@@ -55,7 +55,7 @@ while True:
 
     sock.sendto(packetStr.encode("utf-8"), server_addr)
 
-    if message == "quit":
+    if message == "bye":
         break
 
     data, addr = sock.recvfrom(1024)

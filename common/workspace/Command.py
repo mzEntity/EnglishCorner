@@ -75,8 +75,8 @@ class ListusersCommand(Command):
             return createFailReceiptDict(self.type, msg, "")
 
         bodyStr = ""
-        for _, user in users.items():
-            bodyStr += user.name + "\n"
+        for userName, user in users.items():
+            bodyStr += userName + "\t" + user.id + "\n"
             
         msg = "list all users"
         

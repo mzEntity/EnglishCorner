@@ -155,7 +155,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
         "code": "200",
         "msg": "list all users"
     },
-    "body": "username1\nusername2"
+    "body": "username1\tuserId1\nusername2\tuserId2"
 }
 {
     "header": {
@@ -428,7 +428,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
         "code": "200",
         "msg": "list all users"
     },
-    "body": "username1\nusername2"
+    "body": "username1\tuserId1\nusername2\tuserId2"
 }
 {
     "header": {
