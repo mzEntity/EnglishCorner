@@ -5,6 +5,7 @@ from common.Protocol import ProtocolTranslator
 from common.Config import *
 from client.InputParser import InputParser
 from common.Cache import GlobalCache
+from common.workspace.ReceiptManager import ReceiptManager
 
 def translateToPacket(message):
     translator = ProtocolTranslator()
@@ -29,12 +30,12 @@ def waitForInput():
 def responseToReceipt(msg):
     try:
         translator = ProtocolTranslator()
+        receiptManager = ReceiptManager()
         msgDict = translator.strToDict(msg)
-        print(msgDict["header"]["msg"])
-        print(msgDict["body"])
-        if msgDict["header"]["type"] == 'login':
-            id = msgDict["body"]
-            GlobalCache().setUserInfo("id", id)
+        receipt = receiptManager.createReceipt(msgDict)
+        receipt.response()
+        
+            
     except Exception as e:
         logging.exception(e)
     return 

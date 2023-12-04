@@ -15,14 +15,16 @@ class ReceiptManager:
     def createReceipt(self, receiptDict):
         headerDict = receiptDict["header"]
         if "type" not in headerDict:
-            raise HeaderLackOfMemberException("createCommand: type")
-        if "user" not in headerDict:
-            raise HeaderLackOfMemberException("createCommand: user")
-        commandType = headerDict["type"]
-        if commandType not in self.validCommand:
-            raise InvalidCommandException("createCommand: no such command")
-        newCommand = self.validCommand[commandType](headerDict, receiptDict["body"])
-        return newCommand
+            raise HeaderLackOfMemberException("createReceipt: type")
+        if "code" not in headerDict:
+            raise HeaderLackOfMemberException("createReceipt: code")
+        if "msg" not in headerDict:
+            raise HeaderLackOfMemberException("createReceipt: msg")
+        receiptType = headerDict["type"]
+        if receiptType not in self.validReceipt:
+            raise InvalidReceiptException("createReceipt: no such receipt")
+        newReceipt = self.validReceipt[receiptType](headerDict, receiptDict["body"])
+        return newReceipt
 
     def createReturnDict(self, receiptType, result):
         if receiptType not in self.validReceipt:
