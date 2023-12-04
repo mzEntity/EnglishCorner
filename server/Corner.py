@@ -6,22 +6,26 @@ class Corner:
         self.language = cornerLanguage
         self.users = {}
         self.admins = {}
+        self.idNamePair = {}
 
     def addAdmin(self, user):
         self.admins[user.id] = user
 
     def addUser(self, user, userName):
         self.users[userName] = user
-
-    def removeUser(self, userName):
-        if userName not in self.users:
-            return
-        del self.users[userName]
+        self.idNamePair[user.id] = userName
 
     def removeAdmin(self, userId):
         if userId not in self.admins:
             return
         del self.admins[userId]
+
+    def removeUser(self, userName):
+        if userName not in self.users:
+            return
+        userId = self.users[userName].id
+        del self.users[userName]
+        del self.idNamePair[userId]
 
     def containAdmin(self, adminId):
         return adminId in self.admins
