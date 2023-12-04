@@ -1,6 +1,7 @@
 from server.Receiver import Receiver
 
 from common.exception.Exceptions import *
+from server.Corner import Corner
 
 class Command:
     def __init__(self, headerDict, bodyStr):
@@ -124,6 +125,9 @@ class EnterCommand(Command):
         corner = self.receiver.getCornerByCornerName(self.cornerName)
         if corner is None:
             return createFailReceiptDict(self.type, "No such corner", "")
+        admin = self.receiver.getAdminByUserId(self.userId)
+        corner.addAdmin(admin)
+        admin.joinCorner(corner)
         return createSuccessReceiptDict(self.type, "enter corner successfully", "")
 
     @staticmethod

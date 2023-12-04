@@ -5,6 +5,11 @@ class Corner:
         self.name = cornerName
         self.language = cornerLanguage
         self.users = {}
+        self.admins = {}
+
+    def addAdmin(self, user):
+        userId = user.id
+        self.admins.setdefault(userId, user)
 
     def addUser(self, user):
         userId = user.id

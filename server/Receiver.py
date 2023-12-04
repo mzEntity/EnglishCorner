@@ -55,6 +55,16 @@ class Receiver:
         if cornerName not in self.corners:
             return None
         return self.corners[cornerName]
+
+    def getAdminByUserId(self, userId):
+        if userId not in self.admins:
+            return None
+        return self.admins[userId]
+
+    def getUserByUserId(self, userId):
+        if userId not in self.users:
+            return None
+        return self.users[userId]
         
 
     def userJoinCorner(self, userId, cornerName):
