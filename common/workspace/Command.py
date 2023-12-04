@@ -228,7 +228,7 @@ class JoinCommand(Command):
         user = self.receiver.getUserByUserId(self.userId)
         if user.getCorner():
             return createFailReceiptDict(self.type, "You are already in a corner.", "")
-        if corner.containUser(self.userName):
+        if corner.containUserName(self.userName):
             return createFailReceiptDict(self.type, "Username already exists.", "")
         corner.addUser(user, self.userName)
         user.joinCorner(corner)
@@ -239,6 +239,31 @@ class JoinCommand(Command):
         if len(elements) != 3 or elements[0] != "join":
             raise InvalidCommandException("Invalid /join command")
         return elements[1] + "\t" + elements[2]
+
+class QuitCommand(Command):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+        self.cornerName = bodyStr
+
+    def execute(self):
+        corner = self.receiver.getCornerByCornerName(self.cornerName)
+        if corner is None:
+            return createFailReceiptDict(self.type, "No such corner", "")
+        if not corner.containUserId(self.userId):
+            return createFailReceiptDict(self.type, "You are not in that corner", "")
+        corner.removeUser(self.userId)
+        user = self.receiver.getUserByUserId(self.userId)
+        user.leaveCorner()
+        msg = "quit corner successfully"
+        return createSuccessReceiptDict(self.type, msg, "")
+        
+    @staticmethod
+    def createBodyStr(elements):
+        if len(elements) != 2 or elements[0] != "quit":
+            raise InvalidCommandException("Invalid /quit command")
+        return elements[1]
+
 
 def createHeaderDict(type, code, msg):
     headerDict = {

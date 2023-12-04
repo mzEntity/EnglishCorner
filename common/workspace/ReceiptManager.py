@@ -14,7 +14,8 @@ class ReceiptManager:
             "exit": ExitReceipt,
             "closecorner": CloseCornerReceipt,
             "leave": LeaveReceipt,
-            "join": JoinReceipt
+            "join": JoinReceipt,
+            "quit": QuitReceipt
         }
 
     def createReceipt(self, receiptDict):

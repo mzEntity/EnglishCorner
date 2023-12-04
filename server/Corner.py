@@ -20,18 +20,21 @@ class Corner:
             return
         del self.admins[userId]
 
-    def removeUser(self, userName):
-        if userName not in self.users:
+    def removeUser(self, userId):
+        if userId not in self.idNamePair:
             return
-        userId = self.users[userName].id
+        userName = self.idNamePair[userId]
         del self.users[userName]
         del self.idNamePair[userId]
 
     def containAdmin(self, adminId):
         return adminId in self.admins
 
-    def containUser(self, userName):
+    def containUserName(self, userName):
         return userName in self.users
+
+    def containUserId(self, userId):
+        return userId in self.idNamePair
 
     def getUsers(self):
         return self.users
