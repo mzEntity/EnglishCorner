@@ -1,5 +1,6 @@
 from common.workspace.CommandFactory import CommandFactory
 from common.Singleton import singleton
+from common.Cache import GlobalCache
 
 @singleton
 class InputParser:
@@ -19,7 +20,15 @@ class InputParser:
             raise InvalidRequestException("_getRequestDict: Invalid request")
         requestType = elements[0]
         try:
-            requestDict = self.commandFactory.createDict(requestType, elements)
+            headerDict = {
+                "type": requestType,
+                "user": GlobalCache().getUserInfo("id"),
+            }
+            bodyStr = self.commandFactory.createBodyStr(elements)
+            requestDict = {
+                "header": headerDict,
+                "body": bodyStr
+            }
             return requestDict
         except Exception as e:
             raise InvalidRequestException(str(e))

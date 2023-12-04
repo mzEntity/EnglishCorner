@@ -1,13 +1,14 @@
 from common.Singleton import singleton
+from common.workspace.ReceiptManager import ReceiptManager
 
 @singleton
 class Background:
     def __init__(self):
-        pass
+        self.receiptManager = ReceiptManager()
 
     def executeCommand(self, command):
-        receipt = command.execute()
-        return receipt
+        result = command.execute()
+        return self.receiptManager.createReceiptDict(command.type, result)
         
 
 

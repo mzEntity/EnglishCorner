@@ -1,23 +1,33 @@
 import socket
-
+import logging
 from common.Config import *
 from common.Protocol import ProtocolTranslator
 from common.workspace.CommandFactory import CommandFactory
 from server.Background import Background
 from common.workspace.ReceiptManager import ReceiptManager
 
-def responseToMsg(msg):
+def setAddrToHeader(msgDict, addr):
+    msgDict["header"]["ip"] = addr[0]
+    msgDict["header"]["port"] = str(addr[1])
+
+def responseToMsg(msg, addr):
     translator = ProtocolTranslator()
     cmdFactory = CommandFactory()
     background = Background()
     receiptManager = ReceiptManager()
+    try:
+        msgDict = translator.strToDict(msg)
+        setAddrToHeader(msgDict, addr)
+        cmd = cmdFactory.createCommand(msgDict)
+        receiptDict = background.executeCommand(cmd)
+        returnMsg = translator.dictToStr(receiptDict)
+        return returnMsg
+    except Exception as e:
+        logging.exception(e)
+        return ""
 
-    msgDict = translator.strToDict(msg)
-    cmd = cmdFactory.createCommand(msgDict)
-    receipt = background.executeCommand(cmd)
-    receiptDict = receiptManager.parseReceipt(receipt)
-    returnMsg = translator.dictToStr(receiptDict)
-    return returnMsg
+    
+    
 
 
 
@@ -35,5 +45,5 @@ while True:
     if msg == "quit":
         break
     # 发送回复消息
-    reply_message = responseToMsg(msg)
+    reply_message = responseToMsg(msg, addr)
     sock.sendto(reply_message.encode("utf-8"), addr)
