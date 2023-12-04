@@ -1,11 +1,12 @@
 
-import socket
+
 import logging
 from common.Protocol import ProtocolTranslator
 from common.Config import *
 from client.InputParser import InputParser
 from common.Cache import GlobalCache
 from common.workspace.ReceiptManager import ReceiptManager
+from common.SocketUtils import SocketManager
 
 def translateToPacket(message):
     translator = ProtocolTranslator()
@@ -42,8 +43,8 @@ def responseToReceipt(msg):
 
 
 GlobalCache().setUserInfo("id", "")
-# 创建UDP Socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+socketManager = SocketManager()
 
 while True:
     message = waitForInput()
@@ -53,14 +54,14 @@ while True:
     if packetStr is None:
         continue
 
-    sock.sendto(packetStr.encode("utf-8"), server_addr)
-
+    socketManager.sendTo(packetStr.encode("utf-8"), server_addr)
+    
     if message == "bye":
         break
 
-    data, addr = sock.recvfrom(1024)
+    data, addr = socketManager.recv()
+
     msg = data.decode("utf-8")
     responseToReceipt(msg)
 
-# 关闭Socket连接
-sock.close()
+socketManager.close()

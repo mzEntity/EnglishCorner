@@ -1,9 +1,10 @@
-import socket
+
 import logging
 from common.Config import *
 from common.Protocol import ProtocolTranslator
 from common.workspace.CommandFactory import CommandFactory
 from server.Background import Background
+from common.SocketUtils import SocketManager
 
 def setAddrToHeader(msgDict, addr):
     msgDict["header"]["ip"] = addr[0]
@@ -24,21 +25,24 @@ def responseToMsg(msg, addr):
         logging.exception(e)
         return ""
 
-    
 
-# 创建UDP Socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+if __name__ == "__main__":
+    # 创建UDP Socket
 
-# 绑定Socket到本地IP地址和端口号
-sock.bind(server_addr)
+    socketManager = SocketManager()
+    # 绑定Socket到本地IP地址和端口号
+    socketManager.bind(server_addr)
 
-# 接收数据
-while True:
-    data, addr = sock.recvfrom(1024)
-    msg = data.decode("utf-8")
-    print("received message from", addr)
-    if msg == "bye":
-        break
-    # 发送回复消息
-    reply_message = responseToMsg(msg, addr)
-    sock.sendto(reply_message.encode("utf-8"), addr)
+    # 接收数据
+    while True:
+        data, addr = socketManager.recv()
+        msg = data.decode("utf-8")
+
+        print("received message from", addr)
+        if msg == "bye":
+            break
+        # 发送回复消息
+        reply_message = responseToMsg(msg, addr)
+        socketManager.sendTo(reply_message.encode("utf-8"), addr)
+
+    socketManager.close()
