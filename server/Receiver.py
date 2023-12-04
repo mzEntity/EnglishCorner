@@ -30,26 +30,6 @@ class Receiver:
         corner = Corner(cornerName, cornerLanguage)
         self.corners[cornerName] = corner
 
-    def removeUser(self, userId):
-        if userId not in self.users:
-            return
-        user = self.users[userId]
-        if user.cornerIn is None:
-            return
-        user.cornerIn.removeUser(userId)
-        user.sendMessage("GoodBye")
-        del self.users[userId]
-    
-    def removeCorner(self, cornerName):
-        if cornerName not in self.corners:
-            return
-        corner = self.corners[cornerName]
-        usersInCorner = corner.users
-        for _, user in usersInCorner.items():
-            user.leaveCorner()
-        corner.close()
-        del self.corners[cornerName]
-
     def getCornerByCornerName(self, cornerName):
         if cornerName not in self.corners:
             return None
@@ -64,28 +44,6 @@ class Receiver:
         if userId not in self.users:
             return None
         return self.users[userId]
-
-    def getCornerByCornerName(self, cornerName):
-        if cornerName not in self.corners:
-            return None
-        return self.corners[cornerName]
-        
-
-    def userJoinCorner(self, userId, cornerName):
-        if userId not in self.users or cornerName not in self.corners:
-            return
-        user = self.users[userId]
-        corner = self.corners[cornerName]
-        user.joinCorner(corner)
-        corner.addUser(user)
-
-    def userLeaveCorner(self, userId, cornerName):
-        if userId not in self.users or cornerName not in self.corners:
-            return
-        user = self.users[userId]
-        corner = self.corners[cornerName]
-        user.leaveCorner()
-        corner.removeUser(user)
 
     def getAllCorners(self):
         return self.corners
@@ -110,8 +68,6 @@ class Receiver:
             randomId = Utils.getRandomUserId()
         return randomId
 
-        
-        
     def action(self, cmdStr):
         return f"Receiver get command {cmdStr}"
 
