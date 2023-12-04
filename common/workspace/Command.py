@@ -178,6 +178,7 @@ class CloseCornerCommand(Command):
         for _, admin in admins.items():
             admin.leaveCorner()
         corner.close()
+        self.receiver.re
         return createSuccessReceiptDict(self.type, "close corner successfully", "")
         
     @staticmethod
@@ -214,7 +215,30 @@ class LeaveCommand(Command):
             raise InvalidCommandException("Invalid /leave command")
         return ""
 
+class JoinCommand(Command):
 
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+        self.cornerName, self.userName = bodyStr.split("\t")
+
+    def execute(self):
+        corner = self.receiver.getCornerByCornerName(self.cornerName)
+        if corner is None:
+            return createFailReceiptDict(self.type, "No such corner", "")
+        user = self.receiver.getUserByUserId(self.userId)
+        if user.getCorner():
+            return createFailReceiptDict(self.type, "You are already in a corner.", "")
+        if corner.containUser(self.userName):
+            return createFailReceiptDict(self.type, "Username already exists.", "")
+        corner.addUser(user, self.userName)
+        user.joinCorner(corner)
+        return createSuccessReceiptDict(self.type, "join corner successfully", "")
+        
+    @staticmethod
+    def createBodyStr(elements):
+        if len(elements) != 3 or elements[0] != "join":
+            raise InvalidCommandException("Invalid /join command")
+        return elements[1] + "\t" + elements[2]
 
 def createHeaderDict(type, code, msg):
     headerDict = {

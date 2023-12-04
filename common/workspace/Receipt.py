@@ -102,3 +102,12 @@ class LeaveReceipt(Receipt):
     def response(self):
         print(self.msg)
         sys.exit()
+
+class JoinReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        print(self.msg)
+        

@@ -38,6 +38,11 @@ class Receiver:
         corner = Corner(cornerName, cornerLanguage)
         self.corners[cornerName] = corner
 
+    def removeCorner(self, cornerName):
+        if cornerName not in self.corners:
+            return
+        del self.corners[cornerName]
+
     def getCornerByCornerName(self, cornerName):
         if cornerName not in self.corners:
             return None

@@ -13,7 +13,8 @@ class CommandFactory:
             "enter": EnterCommand,
             "exit": ExitCommand,
             "closecorner": CloseCornerCommand,
-            "leave": LeaveCommand
+            "leave": LeaveCommand,
+            "join": JoinCommand
         }
 
     def createCommand(self, commandDict):

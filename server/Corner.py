@@ -8,17 +8,15 @@ class Corner:
         self.admins = {}
 
     def addAdmin(self, user):
-        userId = user.id
-        self.admins[userId] = user
+        self.admins[user.id] = user
 
-    def addUser(self, user):
-        userId = user.id
-        self.users[userId] = user
+    def addUser(self, user, userName):
+        self.users[userName] = user
 
-    def removeUser(self, userId):
-        if userId not in self.users:
+    def removeUser(self, userName):
+        if userName not in self.users:
             return
-        del self.users[userId]
+        del self.users[userName]
 
     def removeAdmin(self, userId):
         if userId not in self.admins:
@@ -28,8 +26,8 @@ class Corner:
     def containAdmin(self, adminId):
         return adminId in self.admins
 
-    def containUser(self, userId):
-        return userId in self.users
+    def containUser(self, userName):
+        return userName in self.users
 
     def getUsers(self):
         return self.users
