@@ -37,7 +37,6 @@ class Corner:
     def getAdmins(self):
         return self.admins
 
-
     def close(self):
         self.users.clear()
         self.admins.clear()

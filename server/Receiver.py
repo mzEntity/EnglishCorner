@@ -13,16 +13,24 @@ class Receiver:
     def addAdmin(self, ip, port):
         id = self.getAvailableUserId()
         user = User(id, ip, port)
-        user.sendMessage("Hello")
-        self.admins.setdefault(id, user)
+        self.admins[id] = user
         return id
 
     def addUser(self, ip, port):
         id = self.getAvailableUserId()
         user = User(id, ip, port)
-        user.sendMessage("Hello")
-        self.users.setdefault(id, user)
+        self.users[id] = user
         return id
+
+    def removeAdmin(self, userId):
+        if userId in self.admins:
+            return
+        del self.admins[userId]
+
+    def removeUser(self, userId):
+        if userId in self.users:
+            return
+        del self.users[userId]
 
     def addCorner(self, cornerName, cornerLanguage):
         if cornerName in self.corners:

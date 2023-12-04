@@ -1,4 +1,5 @@
 from common.Cache import GlobalCache
+import sys
 
 class Receipt:
     def __init__(self, headerDict, bodyStr):
@@ -92,3 +93,12 @@ class CloseCornerReceipt(Receipt):
 
     def response(self):
         print(self.msg)
+
+class LeaveReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        print(self.msg)
+        sys.exit()

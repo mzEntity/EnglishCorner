@@ -186,6 +186,34 @@ class CloseCornerCommand(Command):
             raise InvalidCommandException("Invalid /closecorner command")
         return elements[1]
 
+class LeaveCommand(Command):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def execute(self):
+        user = self.receiver.getUserByUserId(self.userId)
+        if user:
+            corner = user.getCorner()
+            if corner:
+                user.leaveCorner()
+                corner.removeUser(self.userId)
+            self.receiver.removeUser(self.userId)
+        else:
+            admin = self.receiver.getAdminByUserId(self.userId)
+            corner = admin.getCorner()
+            if corner:
+                admin.leaveCorner()
+                corner.removeAdmin(self.userId)
+            self.receiver.removeAdmin(self.userId)
+        return createSuccessReceiptDict(self.type, "GoodBye.", "")
+        
+    @staticmethod
+    def createBodyStr(elements):
+        if len(elements) != 1 or elements[0] != "leave":
+            raise InvalidCommandException("Invalid /leave command")
+        return ""
+
 
 
 def createHeaderDict(type, code, msg):
