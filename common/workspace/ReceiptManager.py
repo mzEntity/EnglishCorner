@@ -10,7 +10,8 @@ class ReceiptManager:
             "corners": CornersReceipt, 
             "listusers": ListusersReceipt,
             "opencorner": OpenCornerReceipt,
-            "enter": EnterReceipt
+            "enter": EnterReceipt,
+            "exit": ExitReceipt
         }
 
     def createReceipt(self, receiptDict):

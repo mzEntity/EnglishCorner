@@ -36,3 +36,11 @@ class Corner:
     def close(self):
         self.sendSystemINFO(f"Corner {self.name} closed.")
         self.users.clear()
+
+    def containAdmin(self, adminId):
+        return adminId in self.admins
+
+    def removeAdmin(self, adminId):
+        if adminId not in self.admins:
+            return
+        del self.admins[adminId]

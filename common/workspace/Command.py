@@ -136,7 +136,29 @@ class EnterCommand(Command):
             raise InvalidCommandException("Invalid /enter command")
         return elements[1]
 
+class ExitCommand(Command):
 
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+        self.cornerName = bodyStr
+
+    def execute(self):
+        corner = self.receiver.getCornerByCornerName(self.cornerName)
+        if corner is None:
+            return createFailReceiptDict(self.type, "No such corner", "")
+        if not corner.containAdmin(self.userId):
+            return createFailReceiptDict(self.type, "You are not in that corner", "")
+        corner.removeAdmin(self.userId)
+        admin = self.receiver.getAdminByUserId(self.userId)
+        admin.leaveCorner(corner)
+        msg = "exit corner successfully"
+        return createSuccessReceiptDict(self.type, msg, "")
+
+    @staticmethod
+    def createBodyStr(elements):
+        if len(elements) != 2 or elements[0] != "exit":
+            raise InvalidCommandException("Invalid /exit command")
+        return elements[1]
 
 
 def createHeaderDict(type, code, msg):
