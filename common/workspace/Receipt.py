@@ -1,5 +1,5 @@
 from common.Cache import GlobalCache
-import sys
+from common.Utils import *
 
 class Receipt:
     def __init__(self, headerDict, bodyStr):
@@ -102,7 +102,7 @@ class LeaveReceipt(Receipt):
 
     def response(self):
         print(self.msg)
-        sys.exit()
+        systemEXIT()
 
 class JoinReceipt(Receipt):
 

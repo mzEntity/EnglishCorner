@@ -1,5 +1,29 @@
 import socket
 from common.Singleton import singleton
+from common.Protocol import ProtocolTranslator
+from common.Config import *
+
+@singleton
+class CommunicateManager:
+    def __init__(self):
+        self.socketManager = SocketManager()
+        self.translator = ProtocolTranslator()
+
+    def sendDict(self, packetDict, addr):
+        packetStr = self.translator.dictToStr(packetDict)
+        self.socketManager.sendTo(packetStr.encode("utf-8"), addr)
+
+    def recvDict(self, byteCount=1024):
+        data, addr = self.socketManager.recv(byteCount)
+        msg = data.decode("utf-8")
+        packetDict = self.translator.strToDict(msg)
+        return packetDict, addr
+
+    def bind(self, addr):
+        return self.socketManager.bind(addr)
+
+    def close(self):
+        return self.socketManager.close()
 
 @singleton
 class SocketManager:

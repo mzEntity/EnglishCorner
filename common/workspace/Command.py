@@ -1,7 +1,7 @@
 from server.Receiver import Receiver
 
 from common.exception.Exceptions import *
-from server.Corner import Corner
+
 
 class Command:
     def __init__(self, headerDict, bodyStr):
