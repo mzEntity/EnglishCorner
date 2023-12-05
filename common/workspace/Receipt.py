@@ -37,6 +37,9 @@ class CornersReceipt(Receipt):
             print(self.msg)
             return
         bodyStr = self.body
+        if bodyStr == "":
+            print("There is no corner.")
+            return
         cornerList = bodyStr.split("\n")
         print("%10s|%10s" % ("name", "language"))
         for corner in cornerList:
@@ -55,9 +58,13 @@ class ListusersReceipt(Receipt):
             print(self.msg)
             return
         bodyStr = self.body
+        if bodyStr == "":
+            print("There is no user.")
+            return
         userList = bodyStr.split("\n")
         print("%10s|%10s" % ("username", "userid"))
         for user in userList:
+            print(user)
             userName, userId = user.split("\t")
             print("%10s %10s" % (userName, userId))
 

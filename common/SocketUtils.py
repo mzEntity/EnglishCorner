@@ -24,6 +24,9 @@ class CommunicateManager:
 
     def close(self):
         return self.socketManager.close()
+    
+    def getSocket(self):
+        return self.socketManager.sock
 
 @singleton
 class SocketManager:

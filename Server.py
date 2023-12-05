@@ -25,7 +25,6 @@ if __name__ == "__main__":
             setAddrToHeader(packetDict, addr)
             cmd = cmdFactory.createCommand(packetDict)
             receiptDict = background.executeCommand(cmd)
-
             communicateManager.sendDict(receiptDict, addr)
             if receiptDict["header"]["type"] == "leave":
                 systemEXIT()
