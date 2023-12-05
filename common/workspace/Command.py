@@ -173,12 +173,13 @@ class CloseCornerCommand(Command):
             return createFailReceiptDict(self.type, "No such corner", "")
         users = corner.getUsers()
         admins = corner.getAdmins()
+        corner.sendSystemMessage(f"{corner.name} is closed by admin.")
         for _, user in users.items():
             user.leaveCorner()
         for _, admin in admins.items():
             admin.leaveCorner()
         corner.close()
-        self.receiver.re
+        self.receiver.removeCorner(corner.name)
         return createSuccessReceiptDict(self.type, "close corner successfully", "")
         
     @staticmethod
@@ -232,6 +233,7 @@ class JoinCommand(Command):
             return createFailReceiptDict(self.type, "Username already exists.", "")
         corner.addUser(user, self.userName)
         user.joinCorner(corner)
+        corner.sendSystemMessage(f"Welcome {self.userName} to {corner.name}.")
         return createSuccessReceiptDict(self.type, "join corner successfully", "")
         
     @staticmethod
@@ -252,6 +254,7 @@ class QuitCommand(Command):
             return createFailReceiptDict(self.type, "No such corner", "")
         if not corner.containUserId(self.userId):
             return createFailReceiptDict(self.type, "You are not in that corner", "")
+        corner.sendSystemMessage(f"{self.userId} leaves the corner {corner.name}.")
         corner.removeUser(self.userId)
         user = self.receiver.getUserByUserId(self.userId)
         user.leaveCorner()
