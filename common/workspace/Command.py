@@ -8,7 +8,7 @@ class Command:
         self.type = headerDict["type"]
         self.userId = headerDict["user"]
         self.ip = headerDict["ip"]
-        self.port = headerDict["port"]
+        self.port = int(headerDict["port"])
         self.body = bodyStr
         self.receiver = Receiver()
 
@@ -263,6 +263,51 @@ class QuitCommand(Command):
         if len(elements) != 2 or elements[0] != "quit":
             raise InvalidCommandException("Invalid /quit command")
         return elements[1]
+
+class PrivateCommand(Command):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+        self.targetUserId, self.content = bodyStr.split("\t")
+
+    def execute(self):
+        user = self.receiver.getUserByUserId(self.targetUserId)
+        if user is None:
+            return createFailReceiptDict(self.type, "No such user", "")
+        
+        user.sendWhisperMessage(self.userId, self.content)
+    
+        msg = "send message successfully"
+        return createSuccessReceiptDict(self.type, msg, "")
+        
+    @staticmethod
+    def createBodyStr(elements):
+        if len(elements) != 3 or elements[0] != "private":
+            raise InvalidCommandException("Invalid /private command")
+        return elements[1] + "\t" + elements[2]
+
+class MsgCommand(Command):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+        self.cornerName, self.content = bodyStr.split("\t")
+
+    def execute(self):
+        corner = self.receiver.getCornerByCornerName(self.cornerName)
+        if corner is None:
+            return createFailReceiptDict(self.type, "No such corner", "")
+        if not corner.containUserId(self.userId):
+            return createFailReceiptDict(self.type, "You are not in that corner", "")
+        
+        corner.sendChatMessage(self.userId, self.content)
+        msg = "send message successfully"
+        return createSuccessReceiptDict(self.type, msg, "")
+        
+    @staticmethod
+    def createBodyStr(elements):
+        if len(elements) != 3 or elements[0] != "msg":
+            raise InvalidCommandException("Invalid /private command")
+        return elements[1] + "\t" + elements[2]
 
 
 def createHeaderDict(type, code, msg):

@@ -15,7 +15,9 @@ class CommandFactory:
             "closecorner": CloseCornerCommand,
             "leave": LeaveCommand,
             "join": JoinCommand,
-            "quit": QuitCommand
+            "quit": QuitCommand,
+            "private": PrivateCommand,
+            "msg": MsgCommand
         }
 
     def createCommand(self, commandDict):

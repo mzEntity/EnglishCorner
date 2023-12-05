@@ -12,6 +12,7 @@ class CommunicateManager:
     def sendDict(self, packetDict, addr):
         packetStr = self.translator.dictToStr(packetDict)
         self.socketManager.sendTo(packetStr.encode("utf-8"), addr)
+        
 
     def recvDict(self, byteCount=1024):
         data, addr = self.socketManager.recv(byteCount)

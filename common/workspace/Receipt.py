@@ -64,7 +64,6 @@ class ListusersReceipt(Receipt):
         userList = bodyStr.split("\n")
         print("%10s|%10s" % ("username", "userid"))
         for user in userList:
-            print(user)
             userName, userId = user.split("\t")
             print("%10s %10s" % (userName, userId))
 
@@ -126,3 +125,47 @@ class QuitReceipt(Receipt):
 
     def response(self):
         print(self.msg)
+        
+class PrivateReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        print(self.msg)
+        
+class PrivateReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        print(self.msg)
+        
+class WhisperReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        fromId, content = self.body.split("\t")
+        print(f"[PRIVATE]{fromId}: {content}")
+        
+        
+class MsgReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        print(self.msg)
+        
+        
+class ChatReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        cornerName, fromName, content = self.body.split("\t")
+        print(f"[{cornerName}]{fromName}: {content}")

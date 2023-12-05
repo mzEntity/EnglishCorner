@@ -15,7 +15,11 @@ class ReceiptManager:
             "closecorner": CloseCornerReceipt,
             "leave": LeaveReceipt,
             "join": JoinReceipt,
-            "quit": QuitReceipt
+            "quit": QuitReceipt,
+            "private": PrivateReceipt,
+            "whisper": WhisperReceipt,
+            "msg": MsgReceipt,
+            "chat": ChatReceipt
         }
 
     def createReceipt(self, receiptDict):

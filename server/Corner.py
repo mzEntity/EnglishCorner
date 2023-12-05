@@ -41,6 +41,15 @@ class Corner:
     
     def getAdmins(self):
         return self.admins
+    
+    def sendChatMessage(self, fromId, msg):
+        userName = self.idNamePair[fromId]
+        for _, admin in self.admins.items():
+            admin.sendChatMessage(self.name, fromId, msg)
+            
+        for _, user in self.users.items():
+            user.sendChatMessage(self.name, userName, msg)
+            
 
     def close(self):
         self.users.clear()

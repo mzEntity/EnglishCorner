@@ -567,13 +567,25 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
         "code": "200",
         "msg": "send message successfully"
     },
-    "body": "userid\thello world"
+    "body": ""
 }
 {
     "header": {
         "type": "private",
         "code": "400",
         "msg": "No such user"
+    },
+    "body": ""
+}
+```
+
+服务器发给目标用户：
+```json
+{
+    "header": {
+        "type": "whisper",
+        "code": "200",
+        "msg": "message from user"
     },
     "body": "userid\thello world"
 }
@@ -606,7 +618,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
         "code": "200",
         "msg": "send message successfully"
     },
-    "body": "myCorner\thello everyone"
+    "body": ""
 }
 {
     "header": {
@@ -614,7 +626,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
         "code": "400",
         "msg": "No such corner"
     },
-    "body": "myCorner\thello everyone"
+    "body": ""
 }
 {
     "header": {
@@ -623,6 +635,18 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
         "msg": "You are not in that corner"
     },
     "body": "myCorner\thello everyone"
+}
+```
+
+服务器发给所有外语角的用户（如果是管理员，身份为id）：
+```json
+{
+    "header": {
+        "type": "chat",
+        "code": "200",
+        "msg": "message in corner"
+    },
+    "body": "userName\thello world"
 }
 ```
 
