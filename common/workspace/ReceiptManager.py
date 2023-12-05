@@ -20,7 +20,8 @@ class ReceiptManager:
             "whisper": WhisperReceipt,
             "msg": MsgReceipt,
             "chat": ChatReceipt,
-            "kickout": KickOutReceipt
+            "kickout": KickOutReceipt,
+            "system": SystemReceipt
         }
 
     def createReceipt(self, receiptDict):

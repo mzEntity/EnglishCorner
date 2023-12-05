@@ -177,3 +177,12 @@ class KickOutReceipt(Receipt):
 
     def response(self):
         print(self.msg)
+        
+class SystemReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        content = self.body
+        print(f"[SYSTEM]: {content}")

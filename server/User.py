@@ -16,6 +16,10 @@ class User:
         chatDict = MessageManager().buildChatDict(cornerName, fromName, message)
         CommunicateManager().sendDict(chatDict, (self.ip, self.port))
         
+    def sendSystemMessage(self, message):
+        systemDict = MessageManager().buildSystemDict(message)
+        CommunicateManager().sendDict(systemDict, (self.ip, self.port))
+        
     def joinCorner(self, corner):
         self.cornerIn = corner
 

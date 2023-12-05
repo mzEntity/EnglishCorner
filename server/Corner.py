@@ -42,6 +42,11 @@ class Corner:
     def getAdmins(self):
         return self.admins
     
+    def getUserNameByUserId(self, userId):
+        if userId not in self.idNamePair:
+            return None
+        return self.idNamePair[userId]
+    
     def sendChatMessage(self, fromId, msg):
         userName = self.idNamePair[fromId]
         for _, admin in self.admins.items():
@@ -49,6 +54,13 @@ class Corner:
             
         for _, user in self.users.items():
             user.sendChatMessage(self.name, userName, msg)
+            
+    def sendSystemMessage(self, msg):
+        for _, admin in self.admins.items():
+            admin.sendSystemMessage(msg)
+            
+        for _, user in self.users.items():
+            user.sendSystemMessage(msg)
             
 
     def close(self):

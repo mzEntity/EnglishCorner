@@ -317,6 +317,7 @@ class KickOutCommand(Command):
 
     def execute(self):
         user = self.receiver.getUserByUserId(self.targetUserId)
+        
         if user is None:
             return createFailReceiptDict(self.type, "No such user", "")
         admin = self.receiver.getAdminByUserId(self.userId)
@@ -327,6 +328,9 @@ class KickOutCommand(Command):
         if not corner.containUserId(self.targetUserId):
             return createFailReceiptDict(self.type, "target user is not in that corner", "")
         
+        userName = corner.getUserNameByUserId(self.targetUserId)
+        corner.sendSystemMessage(f"{userName}({self.targetUserId}) is kicked out from {corner.name}")
+        user.sendSystemMessage(f"You are kickedout from {corner.name}")
         corner.removeUser(self.targetUserId)
         user.leaveCorner()
         msg = "remove user successfully"
