@@ -19,7 +19,8 @@ class ReceiptManager:
             "private": PrivateReceipt,
             "whisper": WhisperReceipt,
             "msg": MsgReceipt,
-            "chat": ChatReceipt
+            "chat": ChatReceipt,
+            "kickout": KickOutReceipt
         }
 
     def createReceipt(self, receiptDict):

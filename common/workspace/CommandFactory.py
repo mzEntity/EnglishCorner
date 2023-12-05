@@ -17,7 +17,8 @@ class CommandFactory:
             "join": JoinCommand,
             "quit": QuitCommand,
             "private": PrivateCommand,
-            "msg": MsgCommand
+            "msg": MsgCommand,
+            "kickout": KickOutCommand
         }
 
     def createCommand(self, commandDict):

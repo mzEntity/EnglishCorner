@@ -306,8 +306,37 @@ class MsgCommand(Command):
     @staticmethod
     def createBodyStr(elements):
         if len(elements) != 3 or elements[0] != "msg":
-            raise InvalidCommandException("Invalid /private command")
+            raise InvalidCommandException("Invalid /msg command")
         return elements[1] + "\t" + elements[2]
+    
+class KickOutCommand(Command):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+        self.targetUserId = bodyStr
+
+    def execute(self):
+        user = self.receiver.getUserByUserId(self.targetUserId)
+        if user is None:
+            return createFailReceiptDict(self.type, "No such user", "")
+        admin = self.receiver.getAdminByUserId(self.userId)
+        corner = admin.getCorner()
+        if corner is None:
+            return createFailReceiptDict(self.type, "You are not in any corner", "")
+
+        if not corner.containUserId(self.targetUserId):
+            return createFailReceiptDict(self.type, "target user is not in that corner", "")
+        
+        corner.removeUser(self.targetUserId)
+        user.leaveCorner()
+        msg = "remove user successfully"
+        return createSuccessReceiptDict(self.type, msg, "")
+        
+    @staticmethod
+    def createBodyStr(elements):
+        if len(elements) != 2 or elements[0] != "kickout":
+            raise InvalidCommandException("Invalid /kickout command")
+        return elements[1]
 
 
 def createHeaderDict(type, code, msg):

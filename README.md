@@ -180,7 +180,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
 ```json
 {
     "header": {
-        "type": "listusers",
+        "type": "kickout",
         "user": "root"
     },
     "body": "user1"

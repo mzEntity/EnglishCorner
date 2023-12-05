@@ -169,3 +169,11 @@ class ChatReceipt(Receipt):
     def response(self):
         cornerName, fromName, content = self.body.split("\t")
         print(f"[{cornerName}]{fromName}: {content}")
+        
+class KickOutReceipt(Receipt):
+
+    def __init__(self, headerDict, bodyStr):
+        super().__init__(headerDict, bodyStr)
+
+    def response(self):
+        print(self.msg)
