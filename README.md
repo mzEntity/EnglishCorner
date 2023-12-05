@@ -2,6 +2,8 @@
 
 ## 运行
 
+运行在Linux环境中
+
 ```
 python ./Client.py
 python ./Server.py
