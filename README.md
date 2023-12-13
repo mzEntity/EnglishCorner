@@ -37,6 +37,19 @@ python ./Server.py
 
 假设管理员的id为root
 
+**可用的指令：**
+
+```
+opencorner cornerName cornerLanguage
+corners
+listusers
+kickout userId
+enter cornerName
+exit cornerName
+closecorner cornerName
+leave
+```
+
 #### /opencorner
 
 执行：`/opencorner cornerName`
@@ -350,6 +363,20 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
 
 ### 客户
 
+假设客户的id为user1
+
+**可用的指令：**
+
+```
+corners
+listusers
+join cornerName userName
+quit cornerName
+private userId content
+msg cornerName content
+leave
+```
+
 #### /corners
 
 执行：`/corners`
@@ -393,7 +420,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
 {
     "header": {
         "type": "listusers",
-        "user": "root"
+        "user": "user1"
     },
     "body": ""
 }
@@ -518,9 +545,9 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
 }
 ```
 
-#### /@userid
+#### /private
 
-执行：`/@userid msg`
+执行：`/private userid msg`
 
 给用户id为userid的用户发送一条私人信息
 
@@ -638,7 +665,7 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
 {
     "header": {
         "type": "leave",
-        "user": user1"
+        "user": "user1"
     },
     "body": ""
 }
@@ -658,6 +685,14 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
 ```
 
 ### 游客（未登录）
+
+**可用的指令：**
+
+```
+login role
+corners
+leave
+```
 
 #### /login
 
@@ -762,3 +797,10 @@ root开通名为myCorner的，语种为English的外语角，向服务器发送�
     "body": "corner1\tlanguage1\ncorner2\tlanguage2"
 }
 ```
+
+## 创新点
+
+- 管理员不需要在服务端工作，可以远端工作
+
+- 业务逻辑不依赖于协议设计，即可以随时修改应用层协议，消息交换格式
+- 封装Socket对象，可以随时更换使用的传输层协议，即TCP或UDP
