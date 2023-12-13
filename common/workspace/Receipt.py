@@ -1,8 +1,6 @@
 from common.Cache import GlobalCache
 from common.Utils import *
 from common.Config import *
-from client.InputParser import InputParser
-from common.SocketUtils import CommunicateManager
 
 class Receipt:
     def __init__(self, headerDict, bodyStr):
@@ -198,5 +196,4 @@ class OutOfDateReceipt(Receipt):
 
     def response(self):
         print(f"[SYSTEM]: session time out")
-        requestDict = InputParser().parseInput("leave")
-        CommunicateManager().sendDict(requestDict, server_addr)
+        systemEXIT()

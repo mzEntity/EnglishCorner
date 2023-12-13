@@ -85,8 +85,16 @@ class Receiver:
         return f"Receiver get command {cmdStr}"
     
     def checkTime(self):
+        userOutOfDateList = []
         for _, user in self.users.items():
             if user.outOfDate():
-                user.sendOutOfDateMessage()
+                userOutOfDateList.append(user)
+        for user in userOutOfDateList:
+            user.sendOutOfDateMessage()
+            corner = user.getCorner()
+            if corner:
+                user.leaveCorner()
+                corner.removeUser(user.id)
+            self.removeUser(user.id)
 
     
