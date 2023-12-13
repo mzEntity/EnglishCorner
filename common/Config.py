@@ -5,3 +5,5 @@ server_addr = (server_ip, server_port)
 
 user_id_length = 8
 user_id_list = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
+
+session_time = 10

@@ -40,3 +40,14 @@ class MessageManager:
             "header": headerDict,
             "body": body
         }
+        
+    def buildOutOfDateDict(self):
+        headerDict = {
+            "type": "outofdate",
+            "code": "200",
+            "msg": "system message"
+        }
+        return {
+            "header": headerDict,
+            "body": ""
+        }

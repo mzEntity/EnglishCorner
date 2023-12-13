@@ -83,5 +83,10 @@ class Receiver:
 
     def action(self, cmdStr):
         return f"Receiver get command {cmdStr}"
+    
+    def checkTime(self):
+        for user in self.users:
+            if user.outOfDate():
+                user.sendOutOfDateMessage()
 
     

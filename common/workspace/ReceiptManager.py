@@ -21,7 +21,8 @@ class ReceiptManager:
             "msg": MsgReceipt,
             "chat": ChatReceipt,
             "kickout": KickOutReceipt,
-            "system": SystemReceipt
+            "system": SystemReceipt,
+            "outofdate": OutOfDateReceipt
         }
 
     def createReceipt(self, receiptDict):

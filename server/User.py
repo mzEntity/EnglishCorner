@@ -1,5 +1,7 @@
 from common.SocketUtils import CommunicateManager
 from common.MessageManager import MessageManager
+import time
+from common.Config import *
 
 class User:
     def __init__(self, id, ip, port):
@@ -7,6 +9,7 @@ class User:
         self.ip = ip
         self.port = port
         self.cornerIn = None
+        self.sessionStartTime = time.time()
 
     def sendWhisperMessage(self, fromId, message):
         privateDict = MessageManager().buildWhisperDict(fromId, message)
@@ -28,3 +31,11 @@ class User:
 
     def getCorner(self):
         return self.cornerIn
+    
+    def outOfDate(self):
+        now = time.time()
+        return now - self.sessionStartTime > session_time
+    
+    def sendOutOfDateMessage(self):
+        systemDict = MessageManager().buildOutOfDateDict()
+        CommunicateManager().sendDict(systemDict, (self.ip, self.port))
