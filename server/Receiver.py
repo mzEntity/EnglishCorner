@@ -96,5 +96,16 @@ class Receiver:
                 user.leaveCorner()
                 corner.removeUser(user.id)
             self.removeUser(user.id)
+        adminOutOfDateList = []
+        for _, admin in self.admins.items():
+            if admin.outOfDate():
+                adminOutOfDateList.append(admin)
+        for admin in adminOutOfDateList:
+            admin.sendOutOfDateMessage()
+            corner = admin.getCorner()
+            if corner:
+                admin.leaveCorner()
+                corner.removeAdmin(admin.id)
+            self.removeAdmin(admin.id)
 
     
