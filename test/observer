@@ -1,0 +1,5 @@
+login client
+join corner Tom
+SLEEP 15
+listusers
+leave

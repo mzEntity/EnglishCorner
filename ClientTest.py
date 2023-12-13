@@ -7,6 +7,7 @@ from common.Utils import *
 import time
 import select
 import re
+from common.ConsoleManager import ConsoleManager
 
 def getTest(fileName):
     with open(fileName, "r", encoding="utf-8") as f:
@@ -38,24 +39,41 @@ if __name__ == "__main__":
     
     sock = communicateManager.getSocket()
     
-    testFileName = sys.argv[1]
+    enable = sys.argv[1]
+    if enable == "-e":
+        ConsoleManager().enableConsoleManager()
+    else:
+        ConsoleManager().disableConsoleManager()
+        
+    testFileName = sys.argv[2]
     testLines = processTest(getTest(testFileName))
-    
+    sleepTimer = None
+    alertTime = 0
     index = 0
+    communicateManager.setTimeOut(0.1)
     while True:
         try:
-            time.sleep(0.1)
             if index < len(testLines):
+                if sleepTimer is not None:
+                    if time.time() - sleepTimer < alertTime:
+                        continue
+                    else:
+                        sleepTimer = None
+                        alertTime = 0
                 message = testLines[index].strip()
                 index += 1
+                if message.startswith("SLEEP"):
+                    sleepTime = int(message.split(" ")[1])
+                    sleepTimer = time.time()
+                    alertTime = sleepTime
+                    continue
                 requestDict = inputParser.parseInput(message)
                 communicateManager.sendDict(requestDict, server_addr)
-            readable, _, _ = select.select([sock], [], [])
-            for readable_sock in readable:
-                responseDict, addr = communicateManager.recvDict()
-                receipt = receiptManager.createReceipt(responseDict)
-                receipt.response()
+            
+            responseDict, addr = communicateManager.recvDict()
+            receipt = receiptManager.createReceipt(responseDict)
+            receipt.response()
         except Exception as e:
-            print(e)
+            pass
         sys.stdout.flush()
         

@@ -5,6 +5,7 @@ from common.workspace.ReceiptManager import ReceiptManager
 from common.SocketUtils import CommunicateManager
 from common.Utils import *
 import select
+from common.ConsoleManager import ConsoleManager
 
 
 
@@ -32,6 +33,6 @@ if __name__ == "__main__":
                     receipt = receiptManager.createReceipt(responseDict)
                     receipt.response()
         except Exception as e:
-            print(e)
+            ConsoleManager().print(e)
             
         sys.stdout.flush()

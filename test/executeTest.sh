@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# 循环运行Python脚本十次
-for ((i=1; i<=10; i++))
+python3 ../ClientTest.py -e ./test01 &
+for ((i=1; i<=100; i++))
 do
-    # 传递命令行参数给Python脚本
-    python3 ../ClientTest.py ./test01 &
+    python3 ../ClientTest.py -d ./test01 &
 done
-
-wait

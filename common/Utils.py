@@ -13,3 +13,4 @@ def generateRandomStr(count):
 def systemEXIT():
     CommunicateManager().close()
     sys.exit()
+    

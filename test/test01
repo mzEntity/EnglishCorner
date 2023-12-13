@@ -1,4 +1,9 @@
 login client
-join corner {3}
+join corner {7}
+msg corner {6}
+msg corner {6}
+msg corner {6}
+msg corner {6}
+msg corner {6}
 quit corner
 leave

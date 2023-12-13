@@ -6,4 +6,4 @@ server_addr = (server_ip, server_port)
 user_id_length = 8
 random_list = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
-session_time = 10
+session_time = 3600

@@ -1,7 +1,7 @@
 from common.Cache import GlobalCache
 from common.Utils import *
 from common.Config import *
-
+from common.ConsoleManager import ConsoleManager
 class Receipt:
     def __init__(self, headerDict, bodyStr):
         self.type = headerDict["type"]
@@ -20,11 +20,11 @@ class LoginReceipt(Receipt):
     def response(self):
         if self.code == "200":
             role, userId = self.body.split("\t")
-            print(f"login: {userId}({role})")
+            ConsoleManager().print(f"login: {userId}({role})")
             GlobalCache().setUserInfo("id", userId)
             GlobalCache().setUserInfo("role", role)
         else:
-            print(self.msg)
+            ConsoleManager().print(self.msg)
 
         
 
@@ -36,17 +36,17 @@ class CornersReceipt(Receipt):
 
     def response(self):
         if self.code != "200":
-            print(self.msg)
+            ConsoleManager().print(self.msg)
             return
         bodyStr = self.body
         if bodyStr == "":
-            print("There is no corner.")
+            ConsoleManager().print("There is no corner.")
             return
         cornerList = bodyStr.split("\n")
-        print("%10s %10s" % ("name", "language"))
+        ConsoleManager().print("%10s %10s" % ("name", "language"))
         for corner in cornerList:
             cornerName, language = corner.split("\t")
-            print("%10s %10s" % (cornerName, language))
+            ConsoleManager().print("%10s %10s" % (cornerName, language))
             
 
     
@@ -57,17 +57,17 @@ class ListusersReceipt(Receipt):
 
     def response(self):
         if self.code != "200":
-            print(self.msg)
+            ConsoleManager().print(self.msg)
             return
         bodyStr = self.body
         if bodyStr == "":
-            print("There is no user.")
+            ConsoleManager().print("There is no user.")
             return
         userList = bodyStr.split("\n")
-        print("%10s|%10s" % ("username", "userid"))
+        ConsoleManager().print("%10s|%10s" % ("username", "userid"))
         for user in userList:
             userName, userId = user.split("\t")
-            print("%10s %10s" % (userName, userId))
+            ConsoleManager().print("%10s %10s" % (userName, userId))
 
         
 
@@ -77,7 +77,7 @@ class OpenCornerReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
         
 class EnterReceipt(Receipt):
 
@@ -85,7 +85,7 @@ class EnterReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
 
 class ExitReceipt(Receipt):
 
@@ -93,7 +93,7 @@ class ExitReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
 
 class CloseCornerReceipt(Receipt):
 
@@ -101,7 +101,7 @@ class CloseCornerReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
 
 class LeaveReceipt(Receipt):
 
@@ -109,7 +109,7 @@ class LeaveReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
         systemEXIT()
 
 class JoinReceipt(Receipt):
@@ -118,7 +118,7 @@ class JoinReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
 
 class QuitReceipt(Receipt):
 
@@ -126,7 +126,7 @@ class QuitReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
         
 class PrivateReceipt(Receipt):
 
@@ -134,7 +134,7 @@ class PrivateReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
         
 class PrivateReceipt(Receipt):
 
@@ -142,7 +142,7 @@ class PrivateReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
         
 class WhisperReceipt(Receipt):
 
@@ -151,7 +151,7 @@ class WhisperReceipt(Receipt):
 
     def response(self):
         fromId, content = self.body.split("\t")
-        print(f"[PRIVATE]{fromId}: {content}")
+        ConsoleManager().print(f"[PRIVATE]{fromId}: {content}")
         
         
 class MsgReceipt(Receipt):
@@ -160,7 +160,7 @@ class MsgReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
         
         
 class ChatReceipt(Receipt):
@@ -170,7 +170,7 @@ class ChatReceipt(Receipt):
 
     def response(self):
         cornerName, fromName, content = self.body.split("\t")
-        print(f"[{cornerName}]{fromName}: {content}")
+        ConsoleManager().print(f"[{cornerName}]{fromName}: {content}")
         
 class KickOutReceipt(Receipt):
 
@@ -178,7 +178,7 @@ class KickOutReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(self.msg)
+        ConsoleManager().print(self.msg)
         
 class SystemReceipt(Receipt):
 
@@ -187,7 +187,7 @@ class SystemReceipt(Receipt):
 
     def response(self):
         content = self.body
-        print(f"[SYSTEM]: {content}")
+        ConsoleManager().print(f"[SYSTEM]: {content}")
         
 class OutOfDateReceipt(Receipt):
 
@@ -195,5 +195,5 @@ class OutOfDateReceipt(Receipt):
         super().__init__(headerDict, bodyStr)
 
     def response(self):
-        print(f"[SYSTEM]: session time out")
+        ConsoleManager().print(f"[SYSTEM]: session time out")
         systemEXIT()
