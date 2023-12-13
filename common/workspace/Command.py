@@ -194,6 +194,8 @@ class LeaveCommand(Command):
         super().__init__(headerDict, bodyStr)
 
     def execute(self):
+        if self.userId == "":
+            return createSuccessReceiptDict(self.type, "GoodBye.", "")
         user = self.receiver.getUserByUserId(self.userId)
         if user:
             corner = user.getCorner()
