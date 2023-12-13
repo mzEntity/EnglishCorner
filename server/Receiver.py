@@ -23,12 +23,12 @@ class Receiver:
         return id
 
     def removeAdmin(self, userId):
-        if userId in self.admins:
+        if userId not in self.admins:
             return
         del self.admins[userId]
 
     def removeUser(self, userId):
-        if userId in self.users:
+        if userId not in self.users:
             return
         del self.users[userId]
 
@@ -85,7 +85,7 @@ class Receiver:
         return f"Receiver get command {cmdStr}"
     
     def checkTime(self):
-        for user in self.users:
+        for _, user in self.users.items():
             if user.outOfDate():
                 user.sendOutOfDateMessage()
 

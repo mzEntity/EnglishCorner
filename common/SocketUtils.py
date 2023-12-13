@@ -28,6 +28,9 @@ class CommunicateManager:
     
     def getSocket(self):
         return self.socketManager.sock
+    
+    def setTimeOut(self, time):
+        return self.socketManager.setTimeOut(time)
 
 @singleton
 class SocketManager:
@@ -43,6 +46,9 @@ class SocketManager:
 
     def sendTo(self, packetBytes, addr):
         return self.sock.sendto(packetBytes, addr)
+    
+    def setTimeOut(self, time):
+        return self.sock.settimeout(time)
 
     def close(self):
         self.sock.close()

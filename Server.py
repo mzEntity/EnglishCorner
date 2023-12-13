@@ -17,18 +17,19 @@ if __name__ == "__main__":
     background = Background()
     communicateManager = CommunicateManager()
     communicateManager.bind(server_addr)
-    
+    communicateManager.setTimeOut(3)
     # 接收数据
     while True:
         try:
-            packetDict, addr = communicateManager.recvDict()
-
-            print("received message from", addr)
-            setAddrToHeader(packetDict, addr)
-            cmd = cmdFactory.createCommand(packetDict)
-            receiptDict = background.executeCommand(cmd)
-            communicateManager.sendDict(receiptDict, addr)
-            
-            
+            try:
+                packetDict, addr = communicateManager.recvDict()
+                print("received message from", addr)
+                setAddrToHeader(packetDict, addr)
+                cmd = cmdFactory.createCommand(packetDict)
+                receiptDict = background.executeCommand(cmd)
+                communicateManager.sendDict(receiptDict, addr)
+            except TimeoutError as e:
+                pass
+            Receiver().checkTime()
         except Exception as e:
             print(e)
