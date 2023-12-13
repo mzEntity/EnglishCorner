@@ -5,7 +5,8 @@ from common.workspace.ReceiptManager import ReceiptManager
 from common.SocketUtils import CommunicateManager
 from common.Utils import *
 import select
-    
+
+
 
 if __name__ == "__main__":
     GlobalCache().setUserInfo("id", "")

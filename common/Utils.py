@@ -5,8 +5,10 @@ from common.SocketUtils import CommunicateManager
 
 def getRandomUserId():
     idLength = user_id_length
-    randomCharList = random.choices(user_id_list, k=idLength)
-    return "".join(randomCharList)
+    return generateRandomStr(idLength)
+
+def generateRandomStr(count):
+    return "".join(random.choices(random_list, k=count))
 
 def systemEXIT():
     CommunicateManager().close()
