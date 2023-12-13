@@ -18,9 +18,10 @@ class LoginReceipt(Receipt):
 
     def response(self):
         if self.code == "200":
-            userId = self.body
-            print(f"login: {userId}")
+            role, userId = self.body.split("\t")
+            print(f"login: {userId}({role})")
             GlobalCache().setUserInfo("id", userId)
+            GlobalCache().setUserInfo("role", role)
         else:
             print(self.msg)
 
@@ -41,7 +42,7 @@ class CornersReceipt(Receipt):
             print("There is no corner.")
             return
         cornerList = bodyStr.split("\n")
-        print("%10s|%10s" % ("name", "language"))
+        print("%10s %10s" % ("name", "language"))
         for corner in cornerList:
             cornerName, language = corner.split("\t")
             print("%10s %10s" % (cornerName, language))

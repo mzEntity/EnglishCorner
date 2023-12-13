@@ -1,4 +1,3 @@
-import logging
 from common.Config import *
 from client.InputParser import InputParser
 from common.Cache import GlobalCache
@@ -10,11 +9,11 @@ import select
 
 if __name__ == "__main__":
     GlobalCache().setUserInfo("id", "")
+    GlobalCache().setUserInfo("role", "visitor")
     inputParser = InputParser()
     communicateManager = CommunicateManager()
     receiptManager = ReceiptManager()
     
-    print("> ", end="")
     sys.stdout.flush()
     
     sock = communicateManager.getSocket()
@@ -32,8 +31,6 @@ if __name__ == "__main__":
                     receipt = receiptManager.createReceipt(responseDict)
                     receipt.response()
         except Exception as e:
-            logging.exception(e)
+            print(e)
             
-        print("> ", end="")
         sys.stdout.flush()
-    systemEXIT()

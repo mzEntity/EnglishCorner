@@ -30,7 +30,7 @@ class LoginCommand(Command):
         if userId is None:
             return createFailReceiptDict(self.type, "Invalid mode", "")
 
-        return createSuccessReceiptDict(self.type, "login success", userId)
+        return createSuccessReceiptDict(self.type, "login success", self.body + "\t" + userId)
 
     @staticmethod
     def createBodyStr(elements):

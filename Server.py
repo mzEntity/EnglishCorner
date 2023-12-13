@@ -27,8 +27,5 @@ if __name__ == "__main__":
             cmd = cmdFactory.createCommand(packetDict)
             receiptDict = background.executeCommand(cmd)
             communicateManager.sendDict(receiptDict, addr)
-            if receiptDict["header"]["type"] == "leave":
-                systemEXIT()
         except Exception as e:
-            logging.exception(e)
-    systemEXIT()
+            print(e)

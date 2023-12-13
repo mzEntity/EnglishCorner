@@ -40,7 +40,6 @@ class ProtocolTranslator:
     def dictToStr(self, msgDict):
         headerDict = msgDict["header"]
         bodyStr = msgDict["body"]
-        print(headerDict)
         headerStr = self.headerManager.generateHeader(headerDict)
         packetStr = self.packetManager.generatePacket(headerStr, bodyStr)
         return packetStr

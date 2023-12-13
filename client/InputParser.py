@@ -25,7 +25,7 @@ class InputParser:
                 "type": requestType,
                 "user": GlobalCache().getUserInfo("id"),
             }
-            bodyStr = self.commandFactory.createBodyStr(elements)
+            bodyStr = self.commandFactory.createBodyStr(GlobalCache().getUserInfo("role"), elements)
             requestDict = {
                 "header": headerDict,
                 "body": bodyStr

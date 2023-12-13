@@ -43,7 +43,7 @@ python ./Server.py
         "code": "200",
         "msg": "login success"
     },
-    "body": "3ZHH21IS"
+    "body": "client\t3ZHH21IS"
 }
 {
     "header": {
